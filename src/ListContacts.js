@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-const ListContacts = ({ contacts }) => {
+const ListContacts = ({ contacts, removeContacts }) => {
   return (
     <ol className="contact-list">
       {contacts.map((contact) => (
@@ -14,7 +14,12 @@ const ListContacts = ({ contacts }) => {
             <p>{contact.name}</p>
             <p>{contact.email}</p>
           </div>
-          <div className="contact-remove">Remove</div>
+          <div
+            className="contact-remove"
+            onClick={() => removeContacts(contact)}
+          >
+            Remove
+          </div>
         </li>
       ))}
     </ol>
