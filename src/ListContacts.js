@@ -1,12 +1,23 @@
 import React, { useState } from "react";
 import propTypes from "prop-types";
+import escapeStringRegexp from "escape-string-regexp";
+import sortBy from "sort-by";
 
 const ListContacts = ({ contacts, removeContacts }) => {
   const [query, setQuery] = useState("");
 
+  let showingContacts;
+  if (query) {
+    //matching the query with escaping the /
+    const match = new RegExp(escapeStringRegexp(query), "i");
+    //match.test will check if the name matches with the query if it matches it returns that value
+    showingContacts = contacts.filter((contact) => match.test(contact.name));
+  } else {
+    showingContacts = contacts;
+  }
+
   return (
     <div className="list-contacts">
-      {query}
       <div className="list-contacts-top">
         <input
           className="search-contacts"
@@ -17,7 +28,7 @@ const ListContacts = ({ contacts, removeContacts }) => {
         />
       </div>
       <ol className="contact-list">
-        {contacts.map((contact) => (
+        {showingContacts.map((contact) => (
           <li key={contact.key} className="contact-list-item">
             <div
               className="contact-avatar"
