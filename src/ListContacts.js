@@ -5,6 +5,9 @@ import sortBy from "sort-by";
 
 const ListContacts = ({ contacts, removeContacts }) => {
   const [query, setQuery] = useState("");
+  const clickHandler = () => {
+    setQuery("");
+  };
 
   let showingContacts;
   if (query) {
@@ -27,6 +30,14 @@ const ListContacts = ({ contacts, removeContacts }) => {
           onChange={(val) => setQuery(val.target.value.trim())}
         />
       </div>
+      {showingContacts.length !== contacts.length && (
+        <div className="showing-contacts">
+          <span>
+            Showing {showingContacts.length} of Total {contacts.length}
+          </span>
+          <button onClick={clickHandler}>Show All</button>
+        </div>
+      )}
       <ol className="contact-list">
         {showingContacts.map((contact) => (
           <li key={contact.key} className="contact-list-item">
