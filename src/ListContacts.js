@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import propTypes from "prop-types";
 import escapeStringRegexp from "escape-string-regexp";
-import sortBy from "sort-by";
 
-const ListContacts = ({ contacts, removeContacts }) => {
+const ListContacts = ({ contacts, removeContacts, navigateTo }) => {
   const [query, setQuery] = useState("");
+
   const clickHandler = () => {
     setQuery("");
   };
@@ -29,6 +29,7 @@ const ListContacts = ({ contacts, removeContacts }) => {
           value={query}
           onChange={(val) => setQuery(val.target.value.trim())}
         />
+        <a href="#create" onClick={navigateTo} className="add-contact"></a>
       </div>
       {showingContacts.length !== contacts.length && (
         <div className="showing-contacts">

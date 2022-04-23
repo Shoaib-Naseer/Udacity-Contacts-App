@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import CreateContact from "./CreateContact";
 import ListContacts from "./ListContacts";
 
 class App extends Component {
   state = {
+    screen: "list",
     contacts: [
       {
         id: "ryan",
@@ -24,6 +26,7 @@ class App extends Component {
       },
     ],
   };
+
   removeContacts = (contact) => {
     this.setState((state) => ({
       contacts: state.contacts.filter((item) => item.name !== contact.name),
@@ -32,12 +35,16 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="app">
         {/* <ListContacts contacts={contacts} /> */}
-        <ListContacts
-          contacts={this.state.contacts}
-          removeContacts={this.removeContacts}
-        />
+        {this.state.screen === "list" && (
+          <ListContacts
+            contacts={this.state.contacts}
+            removeContacts={this.removeContacts}
+            navigateTo={() => this.setState({ screen: "create" })}
+          />
+        )}
+        {this.state.screen === "create" && <CreateContact />}
       </div>
     );
   }
